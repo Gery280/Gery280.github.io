@@ -8,6 +8,11 @@
         header("Location: login.php");
         exit();
     }
+
+    if (!isset($_SESSION['u_rolId']) || !in_array(1, $_SESSION['u_rolId'])) {
+        header("Location: acceso_denegado.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +56,7 @@
 <header class="w3-display-container w3-grayscale-min" id="home">
     <div class="w3-container" style="min-width:600px;">
         <BR></BR>
-        <h1>HOME</h1>
+        <h1>USUARIOS</h1>
         <h3>Welcome!</h3>
     </div>
 </header>

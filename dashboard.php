@@ -51,7 +51,7 @@
 <header class="w3-display-container w3-grayscale-min" id="home">
     <div class="w3-container" style="min-width:600px;">
         <BR></BR>
-        <h1>HOME</h1>
+        <h1>DASHBOARD</h1>
         <h3>Welcome!</h3>
     </div>
 </header>

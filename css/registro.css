@@ -1,18 +1,9 @@
-
-.container-form{
-    border: 1px solid black;
-    padding: 20px;
-}
-
-.inputs-form{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    width: 100%;
-    gap: 6px;
+.phpTrue{
+    color: rgb(0, 255, 64) !important;
+    font-weight: bold;
 }
 
 .php{
-    font-weight: bolder;
+    color: red !important;
+    font-weight: bold;
 }
-

@@ -23,7 +23,7 @@
                 $_SESSION['u_id'] = $row['u_id'];
                 $_SESSION['u_email'] = $row['u_email'];
                 $_SESSION['u_name'] = $row['u_name'];
-                $_SESSION['u_rolId'] = $row['u_rolId']; //array
+                $_SESSION['u_rolId'] = array($row['u_rolId']);
 
                 header("Location: home.php");
                 exit();
