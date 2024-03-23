@@ -1,13 +1,11 @@
 <?php
-    // Iniciar sesión
+
+    include 'conexion.php'; 
+    include 'validarSesion.php'; 
     session_start();
 
-    // Verificar si el usuario ha iniciado sesión
-    if (!isset($_SESSION['u_id'])) {
-        // Si no ha iniciado sesión, redireccionar a la página de inicio de sesión
-        header("Location: login.php");
-        exit();
-    }
+    validarSesion($conexion);
+
 ?>
 
 <!DOCTYPE html>
