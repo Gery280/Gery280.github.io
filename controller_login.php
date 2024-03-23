@@ -5,39 +5,66 @@
     // Iniciar sesión
     session_start();
 
-    // Verificar si se enviaron los datos del formulario
+    function validarCorreoYContraseña($email, $password) {
+
+        $correo_regex = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+    
+
+        if (!preg_match($correo_regex, $email)) {
+            return false;
+        }
+
+        if (strlen($password) < 8) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Validar y limpiar los datos del formulario
+
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
 
-        // Preparar la consulta SQL para obtener el usuario de la base de datos
-        $sql = "SELECT * FROM usuarios WHERE u_email = '$email'";
-        $result = $conexion->query($sql);
+        $validacion = validarCorreoYContraseña($email,$password);
 
-        if ($result->num_rows === 1) {
-            // Usuario encontrado, verificar la contraseña
-            $row = $result->fetch_assoc();
-            if (password_verify($password, $row['u_password'])) {
-                // Autenticación exitosa, redireccionar al usuario o establecer sesión
-                $_SESSION['u_id'] = $row['u_id'];
-                $_SESSION['u_email'] = $row['u_email'];
-                $_SESSION['u_name'] = $row['u_name'];
-                $_SESSION['u_rolId'] = array($row['u_rolId']);
+        if($validacion){
 
-                header("Location: home.php");
-                exit();
+            $sql = "SELECT * FROM usuarios WHERE u_email = '$email'";
+            $result = $conexion->query($sql);
 
+            if ($result->num_rows === 1) {
+
+                $row = $result->fetch_assoc();
+
+                if (password_verify($password, $row['u_password'])) {
+
+                    $_SESSION['u_id'] = $row['u_id'];
+                    $_SESSION['u_email'] = $row['u_email'];
+                    $_SESSION['u_name'] = $row['u_name'];
+                    $_SESSION['u_rolId'] = array($row['u_rolId']);
+
+                    header("Location: home.php");
+                    exit();
+
+                } else {
+
+                    header("Location: login.php?error_p=Contraseña Incorrecta");
+                    exit();
+                }
             } else {
-                // Autenticación fallida, mostrar mensaje de error
-                header("Location: login.php?error_p=Contraseña Incorrecta");
+
+                header("Location: login.php?error_c=Correo no encontrado");
                 exit();
             }
-        } else {
-            // Usuario no encontrado, mostrar mensaje de error
-            header("Location: login.php?error_c=Correo no encontrado");
+
+        }else{
+            header("Location: login.php?error_validacion=error");
             exit();
         }
+        
     } else{
         header("Location: login.php");
         exit();
