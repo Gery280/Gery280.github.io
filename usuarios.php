@@ -1,16 +1,16 @@
 <?php
     // Iniciar sesión
     session_start();
+    
+    include 'conexion.php'; 
+    include 'validarSesion.php'; 
 
-    // Verificar si el usuario ha iniciado sesión
-    if (!isset($_SESSION['u_id'])) {
-        // Si no ha iniciado sesión, redireccionar a la página de inicio de sesión
-        header("Location: login.php");
-        exit();
-    }
+    
+    validarSesion($conexion);
+    
 
     if (!isset($_SESSION['u_rolId']) || !in_array(1, $_SESSION['u_rolId'])) {
-        header("Location: acceso_denegado.php");
+        header("Location: home.php");
         exit();
     }
 ?>
@@ -68,3 +68,4 @@
 </footer>
 </body>
 </html>
+
